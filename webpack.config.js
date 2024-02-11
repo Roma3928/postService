@@ -30,12 +30,40 @@ let config = {
         test: /\.css$/,
         use: [
           { loader: MiniCssExtractPlugin.loader, options: {} },
-          { loader: 'css-loader', options: { url: true, import: true } },
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+          },
         ],
       },
       {
-        test: /\.(scss|css)$/,
+        test: /\.scss$/,
+        exclude: /\.module\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.module\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+          },
+          ,
+          'sass-loader',
+        ],
       },
       { test: /\.(?:ico|png|jpg|gif|jpeg)$/, type: 'asset/resource' },
       { test: /\.(woff(2)?|svg|otf|ttf|eot)$/, type: 'asset/inline' },
