@@ -3,8 +3,9 @@ import axios from 'axios';
 const API_URL = 'https://jsonplaceholder.typicode.com';
 
 export default class PostService {
-  static async getAll(searchValue?: any) {
-    const response = await axios.get(`${API_URL}/posts`);
+  static async getAll(fetchArgument?: string) {
+    const searchValue = fetchArgument ? `?title=${fetchArgument}` : '';
+    const response = await axios.get(`${API_URL}/posts${searchValue}`);
 
     return response.data;
   }

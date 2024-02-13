@@ -1,15 +1,18 @@
 import { FC, memo } from 'react';
 import styles from './PostItem.module.scss';
 import Rating, { RatingProps } from '../rating';
+import Button from '../ui/button/button';
+import { Link } from 'react-router-dom';
 
 interface PostItemProps extends RatingProps {
   isFirst?: boolean;
+  id: number | null;
   postImg: string;
   title: string;
   description?: string;
 }
 
-const PostItem: FC<PostItemProps> = ({ isFirst, postImg, title, description, rating }) => {
+const PostItem: FC<PostItemProps> = ({ isFirst, id, postImg, title, description, rating }) => {
   return (
     <div className={`${styles.PostItem} ${isFirst && styles['PostItem--first']}`}>
       <img
@@ -22,9 +25,11 @@ const PostItem: FC<PostItemProps> = ({ isFirst, postImg, title, description, rat
           {isFirst && <Rating rating={rating} />}
         </div>
         {isFirst && <p className={styles.description}>{description}</p>}
-        <div className={styles.btns__box}>
+        <div className={`${styles.btns__box} ${isFirst && styles['btns__box--first']}`}>
           {!isFirst && <Rating rating={rating} />}
-          <button className={styles.button}>Читать далее</button>
+          <Link to={`/post/${id}`}>
+            <Button>Читать далее</Button>
+          </Link>
         </div>
       </div>
     </div>

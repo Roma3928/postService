@@ -16,6 +16,7 @@ const PostList: FC<PostListProps> = ({ rating, postList }) => {
       {postList.length > 0 && (
         <PostItem
           isFirst
+          id={postList[0].id}
           postImg={postImg}
           title={postList[0].title}
           description={postList[0].body}
@@ -24,7 +25,13 @@ const PostList: FC<PostListProps> = ({ rating, postList }) => {
       )}
       <div className={styles.smallPost__wrapper}>
         {postList.slice(1).map((item) => (
-          <PostItem postImg={todoImg} title={item.title} rating={rating} key={item.id} />
+          <PostItem
+            id={item.id}
+            postImg={todoImg}
+            title={item.title}
+            rating={rating}
+            key={item.id}
+          />
         ))}
       </div>
     </div>

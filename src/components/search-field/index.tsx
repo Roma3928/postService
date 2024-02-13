@@ -1,16 +1,27 @@
-import { FC } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import styles from './SearchField.module.scss';
 
 interface SearchFieldProps {
   placeholder: string;
   value: string;
+  searchPost: (title: string) => void;
+  setQuery: (value: string) => void;
 }
 
-const SearchField: FC<SearchFieldProps> = ({ placeholder, value }) => {
+const SearchField: FC<SearchFieldProps> = ({ placeholder, value, searchPost, setQuery }) => {
+  const [searchValue, setSearchValue] = useState(value);
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setSearchValue(event.target.value);
+    setQuery(event.target.value);
+  };
+
   return (
     <div className={styles.SearchField}>
       <svg
         className={styles.icon}
+        onClick={() => searchPost(searchValue)}
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -24,7 +35,7 @@ const SearchField: FC<SearchFieldProps> = ({ placeholder, value }) => {
         />
       </svg>
 
-      <input type="text" placeholder={placeholder} />
+      <input type="text" placeholder={placeholder} value={searchValue} onChange={onChange} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-export interface PostInitalState {
+export interface Post {
   userId: number | null;
   id: number | null;
   title: string;
@@ -6,7 +6,8 @@ export interface PostInitalState {
 }
 
 export interface PostsInitalState {
-  posts: PostInitalState[];
+  posts: Post[];
+  query: string;
   isLoading: boolean;
   error: boolean;
 }
